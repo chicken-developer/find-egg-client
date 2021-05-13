@@ -1,6 +1,6 @@
-package Service
+package EasterEggExtremeServer.Service
 
-import Actors.GameAreaActor
+import EasterEggExtremeServer.Actors.GameAreaActor
 import akka.actor.{ActorRef, ActorSystem, Props}
 import akka.http.scaladsl.model.ws.{Message, TextMessage}
 import akka.http.scaladsl.server.Route
@@ -8,8 +8,8 @@ import akka.stream.{FlowShape, Materializer, OverflowStrategy}
 import akka.stream.scaladsl.{Flow, GraphDSL, Merge, Sink, Source}
 import akka.http.scaladsl.server.Directives._
 
-import Core.Game._ 
-import Actors._
+import EasterEggExtremeServer.Core.Game._
+import EasterEggExtremeServer.Actors._
 class GameServer(implicit val system: ActorSystem, implicit val materializer: Materializer) {
 
     val gameMasterHandleActor: ActorRef = system.actorOf(Props[GameAreaActor], "GameMasterHandleActor")
@@ -37,12 +37,12 @@ class GameServer(implicit val system: ActorSystem, implicit val materializer: Ma
             val GameInMatchEventBackToMessageConverter = builder.add(Flow[GameEvent].map{
                 case GameAreaMasterChanged(player) =>
                     import spray.json._
-                    import Core.PlayerDataJsonProtocol._
+                    import EasterEggExtremeServer.Core.PlayerDataJsonProtocol._
                     TextMessage(player.toList.toJson.toString)
 
                 case GameAreaDataChanged(playerData) =>
                     import spray.json._
-                    import Core.PlayerDataJsonProtocol._
+                    import EasterEggExtremeServer.Core.PlayerDataJsonProtocol._
                     TextMessage(playerData.toList.toJson.toString)
             })
 
@@ -52,7 +52,7 @@ class GameServer(implicit val system: ActorSystem, implicit val materializer: Ma
             FlowShape(MessageToGameInMatchEventConverter.in, GameInMatchEventBackToMessageConverter.out)
         })
 
-    import Core.Behavior._
+    import EasterEggExtremeServer.Core.Behavior._
     val GameFinalRoute: Route =
       (get & parameter("playerName") & parameter("mapPosition")) { (playerName, mapPosition) =>
         val player = Generation.GenerationPlayerData(playerName, mapPosition)

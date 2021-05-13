@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WebSocketSharp;
 
 public class NetworkBehavior 
 {
@@ -9,13 +10,6 @@ public class NetworkBehavior
         return true;
     }
 
-    public void Send(string data)
-    {
-        
-    }
+   
 
-    public string Ask(string data)
-    {
-        return "data";
-    }
 }

@@ -1,7 +1,7 @@
-package Actors
+package EasterEggExtremeServer.Actors
 
 import akka.actor.{Actor, ActorLogging}
-import Core.Game._
+import EasterEggExtremeServer.Core.Game._
 
 case object GameMasterBehavior {
     case class UpdateScore(player: Player, score: String)
@@ -55,7 +55,7 @@ class GameAreaActor extends Actor with ActorLogging {
             val actor = oldPlayerWithActor.actor
             val oldPlayerData = oldPlayer.playerData
 
-            import Core.Behavior._
+            import EasterEggExtremeServer.Core.Behavior._
             val newPlayerData: PlayerData = newRequest match {
               case "GET_EGG" =>
                 Handler.HandleAPlayerGetEgg(oldPlayerData)

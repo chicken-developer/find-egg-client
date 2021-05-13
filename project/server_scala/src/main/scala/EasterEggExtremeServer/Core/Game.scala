@@ -1,10 +1,10 @@
-package Core 
-import Core.Game.{Player, PlayerData}
+package EasterEggExtremeServer.Core
+import EasterEggExtremeServer.Core.Game.{Player, PlayerData}
 import akka.actor.ActorRef
 
 import spray.json._
 object PlayerDataJsonProtocol extends DefaultJsonProtocol {
-    import Core.Game._
+    import EasterEggExtremeServer.Core.Game._
     implicit val positionFormat = jsonFormat2(Position)
     implicit val playerDataFormat = jsonFormat3(PlayerData)
     implicit val PlayerFormat = jsonFormat2(Player)
