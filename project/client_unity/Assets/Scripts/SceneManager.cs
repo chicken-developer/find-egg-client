@@ -1,16 +1,15 @@
 ﻿
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 using WebSocketSharp;
+using Debug = UnityEngine.Debug;
 
 public enum GameState
 {
-    IN_SINGLE,
-    IN_MULTI,
-    IN_MAINMENU,
-    IN_PAUSE,
-    IN_WINDOWS // Win game, wait game,...
+    IN_LOBBY,
+    IN_INGAME,
 }
 
 public class SceneManager : MonoBehaviour
@@ -18,16 +17,19 @@ public class SceneManager : MonoBehaviour
     //UI
     [SerializeField] private InputField playerNameField;
     [SerializeField] private Button startGameBtn;
+    [SerializeField] private Text waitingTextAlert;
     [SerializeField] private Canvas UICanvas;
     
     //Network
     private string _server_address;
     private WebSocket _client;
-    private string receiveData;
-    
-    
+    private string receiveData0 = "";
+    private string receiveData1 = "";
+
+    private int _currentPlayerInMatch;
+    private int _maxPlayerInMatch;
+    private GameState _gameState;
     [SerializeField] private List<GameObject> opponents;
-    private GameState _game_state;
     
     //Network Behaviors
     private void SendData(string message, WebSocket ws)
@@ -37,21 +39,31 @@ public class SceneManager : MonoBehaviour
             Debug.Log("Message received from " + ((WebSocket)sender).Url + " is: " + e.Data);
         };
     }
-
-    private string Ask(string message, WebSocket ws)
+    private string Ask0(string message, WebSocket ws)
     {
         ws.Connect();
         ws.Send(message);
-        string data = "NULL";
         ws.OnMessage += (sender, e) => {
-            receiveData = e.Data;
-            Debug.Log("Receive ASK: " + receiveData);
+            Debug.Log("EData  0 : " + e.Data);
+            receiveData0 = e.Data;
         };
-
-        return receiveData;
+        Debug.Log("Receive ASK 0: " + receiveData0);
+        return receiveData0;
+    }
+    private string Ask1(string message, WebSocket ws)
+    {
+        ws.Connect();
+        ws.Send(message);
+        ws.OnMessage += (sender, e) => {
+            Debug.Log("EData  1 : " + e.Data);
+            receiveData1 = e.Data;
+        };
+        Debug.Log("Receive ASK 1 : " + receiveData1);
+        return receiveData1;
     }
     //Network Behaviors______End.
 
+    
     //Game Event
     private void OnClickStartGameBtn()
     {
@@ -62,62 +74,65 @@ public class SceneManager : MonoBehaviour
         var finalAddress = _server_address + "/?playerName=" + playerName + "&mapPosition=" + mapPosition;
         _client = new WebSocket(finalAddress);
         _client.Connect();
-        playerNameField.enabled = false;
+        
         EnterLobby();
     }
-
     private void EnterLobby()
     {
-        if (_client.IsAlive && opponents.Count > 1)
-        {
-            playerNameField.enabled = false;
-        }
+        _gameState = GameState.IN_LOBBY;
+        playerNameField.gameObject.SetActive(false);
+        startGameBtn.gameObject.SetActive(false);
+        waitingTextAlert.enabled = true;
+        string maxPlayer = Ask0("SPECIAL_REQUEST_MAX_PLAYER", _client);
+        string currentPlayer = Ask1("SPECIAL_REQUEST_CURRENT_PLAYER", _client);
+        waitingTextAlert.text += "\n Current player in game: " + currentPlayer + " / " + maxPlayer;
     }
     //Game Event______End.
-    
-    //Call on Start()
-    void InitDataForOnlineMode()
-    {
-        Debug.Log("Init profile for multi mode");
 
-    }
-
-    
-    //Call on Update()
-    void LobbyUpdate()
-    {
-        Debug.Log("Waiting another player");
-    }
+   
     void MovementUpdate()
     {
-        if (_game_state is GameState.IN_MULTI)
-        {
-            
-        }
+        
     }
     void EggScoreUpdate()
     {
-        if (_game_state is GameState.IN_MULTI)
+        
+    }
+    void LobbyUpdate()
+    {
+        if (_gameState != GameState.IN_LOBBY) return;
+        if (_client.IsAlive)
         {
-            
+           
+        }
+    }
+
+    void InGameUpdate()
+    {
+        if(_gameState != GameState.IN_INGAME) return;
+        if (_client.IsAlive)
+        {
+            MovementUpdate();
+            EggScoreUpdate();
         }
     }
     
-    
     void Start()
     {
+        waitingTextAlert.enabled = false;
         startGameBtn.onClick.AddListener(OnClickStartGameBtn);
-        if(_client.IsAlive)
-        {
-            InitDataForOnlineMode();
-        }
-
     }
 
     void Update()
     {
-        LobbyUpdate();
-        MovementUpdate();
-        EggScoreUpdate();
+        switch (_gameState)
+        {
+            case GameState.IN_LOBBY:
+                LobbyUpdate();
+                break;
+            case GameState.IN_INGAME:
+                InGameUpdate();
+                break;
+        }
     }
 }

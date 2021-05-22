@@ -1388,6 +1388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNameField: {fileID: 982519498}
   startGameBtn: {fileID: 1465931076}
+  waitingTextAlert: {fileID: 1058958079}
   UICanvas: {fileID: 290297319}
   opponents: []
 --- !u!4 &1652034420

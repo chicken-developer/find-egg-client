@@ -25,13 +25,19 @@ object Game {
         }
 
     trait GameEvent
-        case class EnterGameMaster(player: Iterable[PlayerWithActor]) extends GameEvent
-        case class GameUpdate(player: Player, newData: String) extends GameEvent
-        case class PositionUpdate(player: Player, direction: String) extends GameEvent
-        case class GameAreaMasterChanged(player: Iterable[Player]) extends GameEvent
-        case class GameAreaDataChanged(playerData: Iterable[PlayerData]) extends GameEvent
         case class JoinMatch(player: Player, actor: ActorRef) extends GameEvent
         case class LeftMatch(player: Player) extends GameEvent
+
+        case class SpecialRequestUpdate(player: Player, request: String) extends GameEvent
+        case class GameDataUpdate(player: Player, newData: String) extends GameEvent
+        case class PositionUpdate(player: Player, direction: String) extends GameEvent
+
+        case class SpecialDataChanged(specialData: String) extends GameEvent
+        case class GameDataChanged(player: Iterable[Player]) extends GameEvent
+        case class PositionChanged(playerData: Iterable[PlayerData]) extends GameEvent
+        case class NoHaveUpdate()
+
+
 
 }
 

@@ -9,7 +9,7 @@ case object GameMasterBehavior {
     case class UpdateState(player: Player, state: String)
 }
 class GameAreaActor extends Actor with ActorLogging {
-    
+    val maxPlayerInGame = 12
     val playersInGame = collection.mutable.LinkedHashMap[String, PlayerWithActor]()
     def takenPositions = playersInGame.values.map(_.player.playerData.position).toList
 
@@ -19,11 +19,11 @@ class GameAreaActor extends Actor with ActorLogging {
            val newPlayer = Player(player.playerName, player.playerData);
            playersInGame += (newPlayer.playerName -> PlayerWithActor(newPlayer, actor))
            println(s"Player $newPlayer enter game succeed")
-           NotifyGameMasterUpdate()
+           NotifyGameDataUpdate()
 
        case LeftMatch(player) =>
            playersInGame -= player.playerName
-           NotifyGameMasterUpdate()
+           NotifyGameDataUpdate()
 
        case PositionUpdate(player, direction) =>
          val offset = direction match {
@@ -32,7 +32,6 @@ class GameAreaActor extends Actor with ActorLogging {
            case "right" => Position(1,0)
            case "left" => Position(-1,0)
          }
-
          val oldPlayerWithActor = playersInGame(player.playerName)
          val oldPlayer = oldPlayerWithActor.player
          val newPosition = oldPlayer.playerData.position + offset
@@ -43,11 +42,11 @@ class GameAreaActor extends Actor with ActorLogging {
                Player(player.playerName,
                       PlayerData(player.playerData.currentPoint, newPosition, player.playerData.eggPosition)),
                       actor)
-           NotifyGameDataUpdate()
+           NotifyPositionUpdate()
          }
 
 
-       case GameUpdate(player, newRequest) =>           
+       case GameDataUpdate(player, newRequest) =>
             log.info(s"Receive new update request is : $newRequest")
             val oldPlayerWithActor = playersInGame(player.playerName)
             val oldPlayer = oldPlayerWithActor.player
@@ -67,17 +66,37 @@ class GameAreaActor extends Actor with ActorLogging {
            playersInGame(player.playerName) = PlayerWithActor(Player(player.playerName, newPlayerData), actor)
            NotifyGameDataUpdate()
 
-       case _ =>
-         log.info("Enter Game master actor")
-         NotifyGameDataUpdate()
-    }
+       case SpecialRequestUpdate(player, request) =>
+            log.info(s"Receive $request from $player")
+            val returnData = request match {
+              case "MAX_PLAYER" =>
+                maxPlayerInGame.toString
+              case "CURRENT_PLAYER" =>
+                playersInGame.size.toString
+            }
+            NotifySpecialRequestUpdate(returnData)
 
-    def NotifyGameMasterUpdate(): Unit = {
-        playersInGame.values.foreach(_.actor ! GameAreaMasterChanged(playersInGame.values.map(_.player)))
+       case _ =>
+           log.info("Enter Game master actor")
+           NotifyNoHaveUpdate()
     }
 
     def NotifyGameDataUpdate(): Unit = {
-        playersInGame.values.foreach(_.actor ! GameAreaDataChanged(playersInGame.values.map(_.player.playerData)))
+        playersInGame.values.foreach(_.actor ! GameDataChanged(playersInGame.values.map(_.player)))
     }
 
+    def NotifyPositionUpdate(): Unit = {
+        playersInGame.values.foreach(_.actor ! PositionChanged(playersInGame.values.map(_.player.playerData)))
+    }
+    def NotifySpecialRequestUpdate(newUpdate: String): Unit = {
+      playersInGame.values.foreach(_.actor ! SpecialDataChanged(newUpdate))
+    }
+
+    def NotifyNoHaveUpdate(): Unit = {
+
+    }
+
+    def NotifyUpdateAll(): Unit = {
+
+    }
 }

@@ -9,7 +9,6 @@ import akka.stream.scaladsl.{Flow, GraphDSL, Merge, Sink, Source}
 import akka.http.scaladsl.server.Directives._
 
 import EasterEggExtremeServer.Core.Game._
-import EasterEggExtremeServer.Actors._
 class GameServer(implicit val system: ActorSystem, implicit val materializer: Materializer) {
 
     val gameMasterHandleActor: ActorRef = system.actorOf(Props[GameAreaActor], "GameMasterHandleActor")
@@ -24,26 +23,35 @@ class GameServer(implicit val system: ActorSystem, implicit val materializer: Ma
 
             //This will tell request to actor, and actor update and push back an event
             val MessageToGameInMatchEventConverter = builder.add(Flow[Message].map {
+
+                case TextMessage.Strict(s"SPECIAL_REQUEST_$request") =>
+                    println("Have special request from " + player.toString)
+                    SpecialRequestUpdate(player, request)
+
                 case TextMessage.Strict(direction) =>
                     println("Have move request from " + player.toString)
                     PositionUpdate(player, direction)
 
                 case TextMessage.Strict(newRequest) =>
                     println("Have update data request from " + player.toString)
-                    GameUpdate(player, newRequest)
+                    GameDataUpdate(player, newRequest)
 
             })
             //This handle back event from actor, and send text message to client
             val GameInMatchEventBackToMessageConverter = builder.add(Flow[GameEvent].map{
-                case GameAreaMasterChanged(player) =>
+                case GameDataChanged(player) =>
                     import spray.json._
                     import EasterEggExtremeServer.Core.PlayerDataJsonProtocol._
                     TextMessage(player.toList.toJson.toString)
 
-                case GameAreaDataChanged(playerData) =>
+                case PositionChanged(playerWithNewPosition) =>
                     import spray.json._
                     import EasterEggExtremeServer.Core.PlayerDataJsonProtocol._
-                    TextMessage(playerData.toList.toJson.toString)
+                    TextMessage(playerWithNewPosition.toList.toJson.toString)
+
+                case SpecialDataChanged(specialDataSendBackToClient) =>
+                    println(s"Send back $specialDataSendBackToClient to client")
+                    TextMessage(specialDataSendBackToClient)
             })
 
             materialization ~> merge ~> gameInMatchProfileSink
