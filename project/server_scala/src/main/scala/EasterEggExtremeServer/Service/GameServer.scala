@@ -24,11 +24,11 @@ class GameServer(implicit val system: ActorSystem, implicit val materializer: Ma
             //This will tell request to actor, and actor update and push back an event
             val MessageToGameInMatchEventConverter = builder.add(Flow[Message].map {
 
-                case TextMessage.Strict(s"SPECIAL_REQUEST_$request") =>
+                case TextMessage.Strict(s"SPECIAL_REQUEST:$request") =>
                     println("Have special request from " + player.toString)
                     SpecialRequestUpdate(player, request)
 
-                case TextMessage.Strict(direction) =>
+                case TextMessage.Strict(s"MOVE_REQUEST:$direction") =>
                     println("Have move request from " + player.toString)
                     PositionUpdate(player, direction)
 
@@ -66,5 +66,6 @@ class GameServer(implicit val system: ActorSystem, implicit val materializer: Ma
         val player = Generation.GenerationPlayerData(playerName, mapPosition)
         handleWebSocketMessages(gameInMatchFlow(player))
       }
+
 
 }

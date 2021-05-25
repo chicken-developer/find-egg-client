@@ -1,6 +1,5 @@
 ﻿
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 using WebSocketSharp;
@@ -8,6 +7,7 @@ using Debug = UnityEngine.Debug;
 
 public enum GameState
 {
+    NONE,
     IN_LOBBY,
     IN_INGAME,
 }
@@ -23,47 +23,14 @@ public class SceneManager : MonoBehaviour
     //Network
     private string _server_address;
     private WebSocket _client;
-    private string receiveData0 = "";
-    private string receiveData1 = "";
+    private List<string> staticData;
+    private List<string> dynamicData;
 
     private int _currentPlayerInMatch;
     private int _maxPlayerInMatch;
     private GameState _gameState;
     [SerializeField] private List<GameObject> opponents;
-    
-    //Network Behaviors
-    private void SendData(string message, WebSocket ws)
-    {
-        ws.Send(message);
-        ws.OnMessage += (sender, e) => {
-            Debug.Log("Message received from " + ((WebSocket)sender).Url + " is: " + e.Data);
-        };
-    }
-    private string Ask0(string message, WebSocket ws)
-    {
-        ws.Connect();
-        ws.Send(message);
-        ws.OnMessage += (sender, e) => {
-            Debug.Log("EData  0 : " + e.Data);
-            receiveData0 = e.Data;
-        };
-        Debug.Log("Receive ASK 0: " + receiveData0);
-        return receiveData0;
-    }
-    private string Ask1(string message, WebSocket ws)
-    {
-        ws.Connect();
-        ws.Send(message);
-        ws.OnMessage += (sender, e) => {
-            Debug.Log("EData  1 : " + e.Data);
-            receiveData1 = e.Data;
-        };
-        Debug.Log("Receive ASK 1 : " + receiveData1);
-        return receiveData1;
-    }
-    //Network Behaviors______End.
-
-    
+  
     //Game Event
     private void OnClickStartGameBtn()
     {
@@ -74,20 +41,18 @@ public class SceneManager : MonoBehaviour
         var finalAddress = _server_address + "/?playerName=" + playerName + "&mapPosition=" + mapPosition;
         _client = new WebSocket(finalAddress);
         _client.Connect();
-        
         EnterLobby();
     }
     private void EnterLobby()
     {
-        _gameState = GameState.IN_LOBBY;
         playerNameField.gameObject.SetActive(false);
         startGameBtn.gameObject.SetActive(false);
+        _client.Connect();
+        _client.Send("SPECIAL_REQUEST_CURRENT_PLAYER");
+        _client.Send("SPECIAL_REQUEST_MAX_PLAYER");
         waitingTextAlert.enabled = true;
-        string maxPlayer = Ask0("SPECIAL_REQUEST_MAX_PLAYER", _client);
-        string currentPlayer = Ask1("SPECIAL_REQUEST_CURRENT_PLAYER", _client);
-        waitingTextAlert.text += "\n Current player in game: " + currentPlayer + " / " + maxPlayer;
+        _gameState = GameState.IN_LOBBY;
     }
-    //Game Event______End.
 
    
     void MovementUpdate()
@@ -98,13 +63,25 @@ public class SceneManager : MonoBehaviour
     {
         
     }
+
+    void NetworkUpdate()
+    {
+        
+    }
     void LobbyUpdate()
     {
         if (_gameState != GameState.IN_LOBBY) return;
+        var currentPlayer = System.Convert.ToInt32(staticData[1]);
+        var maxPlayer = System.Convert.ToInt32(staticData[2]);
         if (_client.IsAlive)
         {
-           
+            waitingTextAlert.text = "Waiting another player join game... \n Current player in joining are: " +currentPlayer + " / " + maxPlayer;
+            if (currentPlayer < maxPlayer)
+            {
+                _gameState = GameState.IN_INGAME;
+            }
         }
+        
     }
 
     void InGameUpdate()
@@ -117,14 +94,20 @@ public class SceneManager : MonoBehaviour
         }
     }
     
+    
     void Start()
     {
+        _gameState = GameState.NONE;
+        staticData = new List<string>();
+        dynamicData = new List<string>();
         waitingTextAlert.enabled = false;
         startGameBtn.onClick.AddListener(OnClickStartGameBtn);
     }
 
+
     void Update()
     {
+        NetworkUpdate();
         switch (_gameState)
         {
             case GameState.IN_LOBBY:
