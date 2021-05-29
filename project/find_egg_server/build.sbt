@@ -2,11 +2,10 @@ name := "ubisoft-game-server"
 
 version := "1.0"
 
-scalaVersion := "2.13.4"
+scalaVersion := "2.13.6"
 val akkaVersion = "2.6.10"
 val JacksonVersion = "2.10.5.1"
 
-enablePlugins(JavaAppPackaging) //To deploy on heroku
 mainClass in Compile := Some("EasterEggExtremeServer.ServerEntryPoint")
 
 libraryDependencies ++= Seq(
