@@ -1,9 +1,12 @@
-﻿namespace Networks.NetworkBehaviors
+﻿using UnityEngine;
+using WebSocketSharp;
+
+namespace Networks.NetworkBehaviors
 {
     public class LobbyBehavior: NetworkBehavior
     {
         private static LobbyBehavior _instance;
-        
+        private string serverAddress = "ws://192.168.220.129:8082/echo";
         public static LobbyBehavior GetInstance()
         {
             if (_instance == null)
@@ -15,6 +18,13 @@
 
         public bool JoinLobby(Player player)
         {
+            using (var ws = new WebSocket (serverAddress)) {
+                ws.OnMessage += (sender, e) =>
+                  Debug.Log("Server say back " + e.Data);
+
+                ws.Connect ();
+                ws.Send ("Hello cpp");
+            }
             return true;
         }
     }

@@ -1,7 +1,6 @@
 ﻿namespace Networks.NetworkBehaviors
 {
-    public class ChatBehavior: NetworkBehavior
-    {
+    public class ChatBehavior: NetworkBehavior {
         
     }
 }

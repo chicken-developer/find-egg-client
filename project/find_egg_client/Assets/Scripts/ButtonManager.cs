@@ -26,9 +26,11 @@ public class ButtonManager: MonoBehaviour
     
     void Start()
     {
+        lobby.enabled = true; // Enter lobby
         ui_btn_MultiMode.onClick.AddListener(OnClick_ui_btn_MultiMode);
         multiMode_btn_Login.onClick.AddListener(OnClick_multiMode_btn_Login);
         hud_btn_EnterGame.onClick.AddListener(OnClick_hud_btn_EnterGame);
+        hud_btn_Shop.onClick.AddListener(OnClick_hud_btn_Shop);
     }
     public void OnClick_ui_btn_MultiMode()
     {
@@ -52,7 +54,6 @@ public class ButtonManager: MonoBehaviour
         playerName.text = Player.GetInstance().getEmail();
         UICanvas.enabled = false;
         HUDCanvas.enabled = true;
-        
     }
 
     private void OnClick_hud_btn_EnterGame()
@@ -66,5 +67,18 @@ public class ButtonManager: MonoBehaviour
         UICanvas.enabled = false;
         HUDCanvas.enabled = false;
         lobby.enabled = true; // Enter lobby
+    }
+
+    private void OnClick_hud_btn_Shop()
+    {
+        if (!Player.GetInstance().checkVerify())
+        {
+            Debug.Log("Player data is not verify, can't join game");
+            return;
+        }
+        CoreGameBehavior.GetInstance().EnterGame(Player.GetInstance());
+        UICanvas.enabled = false;
+        HUDCanvas.enabled = false;
+       
     }
 }
