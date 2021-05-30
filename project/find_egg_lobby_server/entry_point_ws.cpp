@@ -8,7 +8,7 @@ using WsServer = GameMasterServer::SocketServer<GameMasterServer::WS>;
 int main() {
     // WebSocket (WS)-server at port 8080 using 1 thread
     WsServer server;
-    server.config.port = 8080;
+    server.config.port = 8082;
     server.config.address = "192.168.220.129";
 
     // Example 1: echo WebSocket endpoint

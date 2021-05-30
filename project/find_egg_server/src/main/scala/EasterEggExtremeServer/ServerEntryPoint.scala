@@ -44,7 +44,7 @@ object ServerEntryPoint {
     val herokuPort: Int = sys.env.getOrElse("PORT", "8005").toInt
 
     val gameServerBind = Http().newServerAt(localHost, localPort).enableHttps(httpsConnectionContext).bindFlow(gameService.GameFinalRoute)
-
+    
 
     val listBindingFutureWithSecurity = List(gameServerBind)
     println(s"Server is progressing...\nPress RETURN to stop...")

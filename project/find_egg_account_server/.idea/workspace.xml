@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f732ebcd-0ccc-4670-b1c6-4b6be9c2d768" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../find_egg_lobby_server/entry_point_ws.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../find_egg_lobby_server/entry_point_ws.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +41,7 @@
     <property name="configurable.GoLibrariesConfigurable.is.expanded" value="true" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
+    <property name="go.vendoring.notification.had.been.shown" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$" />
   </component>
   <component name="RunManager" selected="Go Build.go build main.go">
