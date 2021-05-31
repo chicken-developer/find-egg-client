@@ -4,14 +4,13 @@ using WebSocketSharp.Server;
 using System;
 using System.IO;
 using System.Net;
-using DefaultNamespace;
 
 namespace Networks.NetworkBehaviors
 {
     public class AccountBehavior: NetworkBehavior
     {
         private static AccountBehavior _instance;
-        private string serverAddress = "http://192.168.220.129:8084";
+        private string serverAddress = "http://103.153.65.194:8084";
         public static AccountBehavior GetInstance()
         {
             if (_instance == null)
@@ -27,7 +26,7 @@ namespace Networks.NetworkBehaviors
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             StreamReader reader = new StreamReader(response.GetResponseStream());
             string jsonResponse = reader.ReadToEnd();
-            RealtimeDebug.Append("Result from golang server: " + jsonResponse);
+            Debug.Log("Result from golang server: " + jsonResponse);
             return true;
         }
     }

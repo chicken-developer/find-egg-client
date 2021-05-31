@@ -6,7 +6,7 @@ namespace Networks.NetworkBehaviors
     public class CoreGameBehavior: NetworkBehavior
     {
         private static CoreGameBehavior _instance;
-        private string serverAddress = "wss://192.168.220.129:8083/?playerName=playerDemo&mapPosition=101010";
+        private string serverAddress = "wss://192.168.220.129:8085/?playerName=playerDemo&mapPosition=101010";
         public static CoreGameBehavior GetInstance()
         {
             if (_instance == null)
