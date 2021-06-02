@@ -30,7 +30,7 @@ public class SceneManager : MonoBehaviour
         lobby.enabled = false;
         UICanvas.enabled = true;
         HUDCanvas.enabled = false;
-        gameplay.SetActive(false);
+        gameplay.SetActive(true);
         SetupUI();
     }
 

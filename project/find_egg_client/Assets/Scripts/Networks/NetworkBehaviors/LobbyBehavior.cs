@@ -6,7 +6,7 @@ namespace Networks.NetworkBehaviors
     public class LobbyBehavior: NetworkBehavior
     {
         private static LobbyBehavior _instance;
-        private string serverAddress = "ws://192.168.220.129:8082/echo";
+        private string serverAddress = "ws://103.153.65.194:8086/echo";
         public static LobbyBehavior GetInstance()
         {
             if (_instance == null)
