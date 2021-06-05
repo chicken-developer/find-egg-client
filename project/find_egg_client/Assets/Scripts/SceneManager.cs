@@ -14,11 +14,13 @@ public class SceneManager : MonoBehaviour
 {
     [SerializeField] private Canvas UICanvas;
     [SerializeField] private Canvas HUDCanvas;
+    
     [SerializeField] private GameObject UI_MainMenu;
     [SerializeField] private GameObject UI_SingleMode;
     [SerializeField] private GameObject UI_MultiMode;
+    
     [SerializeField] private LobbyManager lobby;
-    [SerializeField] private GameObject gameplay;
+    [SerializeField] private CoreGameManager coreGame;
     void SetupUI()
     {
         UI_MainMenu.SetActive(true);
@@ -29,14 +31,9 @@ public class SceneManager : MonoBehaviour
     {
         lobby.enabled = false;
         UICanvas.enabled = true;
+        coreGame.enabled = false;
         HUDCanvas.enabled = false;
-        gameplay.SetActive(true);
         SetupUI();
     }
-
-
-    void Update()
-    {
-       
-    }
+    
 }

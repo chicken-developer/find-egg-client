@@ -1,5 +1,4 @@
-﻿using Networks;
-using Networks.NetworkBehaviors;
+﻿
 using UnityEngine;
 using UnityEngine.UI;
 public class ButtonManager: MonoBehaviour
@@ -23,7 +22,7 @@ public class ButtonManager: MonoBehaviour
     [SerializeField] private Button hud_btn_EnterGame;
     [SerializeField] private Button hud_btn_Shop;
     [SerializeField] private Text playerName;
-    
+
     void Start()
     {
         lobby.enabled = true; // Enter lobby
@@ -44,39 +43,28 @@ public class ButtonManager: MonoBehaviour
         var password = multiMode_if_Password.text == "" ? "12345" : multiMode_if_Password.text;
         if (!AccountBehavior.GetInstance().Login(userName, password))
         {
-           Debug.Log("Fail to login");
-           return;
+            //TODO: Handle case login false here
+            return;
         }
-       
-        Player.GetInstance().setUserName(userName);
-        Player.GetInstance().setPassword(password);
-        Player.GetInstance().setEmail("demosetFromButtonManager@gmail.com");
-        playerName.text = Player.GetInstance().getEmail();
+
+        playerName.text = userName;
         UICanvas.enabled = false;
         HUDCanvas.enabled = true;
     }
 
     private void OnClick_hud_btn_EnterGame()
     {
-        if (!Player.GetInstance().checkVerify())
-        {
-            Debug.Log("Player data is not verify, can't join game");
-            return;
-        }
-        LobbyBehavior.GetInstance().JoinLobby(Player.GetInstance());
+       
         UICanvas.enabled = false;
         HUDCanvas.enabled = false;
         lobby.enabled = true; // Enter lobby
+        lobby.JoinOrQuitLobby(PlayerDataLocal.GenerationDataForLobby());
     }
 
     private void OnClick_hud_btn_Shop()
     {
-        if (!Player.GetInstance().checkVerify())
-        {
-            Debug.Log("Player data is not verify, can't join game");
-            return;
-        }
-        CoreGameBehavior.GetInstance().EnterGame(Player.GetInstance());
+       
+       
         UICanvas.enabled = false;
         HUDCanvas.enabled = false;
        

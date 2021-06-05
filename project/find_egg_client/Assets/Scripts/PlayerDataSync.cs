@@ -19,21 +19,21 @@ public class PlayerData
 }
 
 [Serializable]
-public  class PlayerInGame
+public  class PlayerDataSync
 {
     public PlayerData playerData;
     public string playerIndex;
     public string playerName;
-    public static List<PlayerInGame> Init(string resultFromServer)
+    public static List<PlayerDataSync> Init(string resultFromServer)
     {
         var afterReplace = resultFromServer.Remove(0, 1).Remove(resultFromServer.Length - 2, 1).Replace("},{", "};{");
         var playerDatas = afterReplace.Split(';');
-        var players = new List<PlayerInGame>();
+        var players = new List<PlayerDataSync>();
         foreach (var playerData in playerDatas)
         {
             Debug.Log("Json: " + playerData);
-            PlayerInGame player = new PlayerInGame();
-            player = JsonUtility.FromJson<PlayerInGame>(playerData);
+            PlayerDataSync player = new PlayerDataSync();
+            player = JsonUtility.FromJson<PlayerDataSync>(playerData);
             players.Add(player);
             Debug.Log(player.playerName);
         }
