@@ -93,7 +93,7 @@ PlayerSettings:
   xboxEnableFitness: 0
   visibleInBackground: 1
   allowFullscreenSwitch: 1
-  fullscreenMode: 1
+  fullscreenMode: 3
   xboxSpeechDB: 0
   xboxEnableHeadOrientation: 0
   xboxEnableGuest: 0
@@ -536,11 +536,11 @@ PlayerSettings:
   m_MobileRenderingPath: 1
   metroPackageName: DN_v2
   metroPackageVersion: 
-  metroCertificatePath: 
+  metroCertificatePath: E:\DevGame\find-egg-client\project\find_egg_client\Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
-  metroCertificateSubject: 
-  metroCertificateIssuer: 
-  metroCertificateNotAfter: 0000000000000000
+  metroCertificateSubject: DefaultCompany
+  metroCertificateIssuer: DefaultCompany
+  metroCertificateNotAfter: 00166ef84879d801
   metroApplicationDescription: DN_v2
   wsaImages: {}
   metroTileShortName: 

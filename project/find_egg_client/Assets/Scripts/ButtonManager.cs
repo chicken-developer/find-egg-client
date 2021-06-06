@@ -47,7 +47,8 @@ public class ButtonManager: MonoBehaviour
             return;
         }
 
-        playerName.text = userName;
+        PlayerDataLocal.Init(userName);
+        playerName.text = PlayerDataLocal.playerUserName;
         UICanvas.enabled = false;
         HUDCanvas.enabled = true;
     }

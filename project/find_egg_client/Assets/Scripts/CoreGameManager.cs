@@ -6,10 +6,17 @@ using WebSocketSharp;
 
 public class CoreGameManager : MonoBehaviour
 {
+    [SerializeField] private LobbyManager lobby;
+    [SerializeField] private GameObject lobbyMapObj;
+
+    private List<PlayerDataSync> allDatas;
+    private PlayerDataSync currentPlayerData;
+    private static int playerIndex;
+
     private WebSocket coreGameWS;
     private List<string> coreGameMessages;
    
-    void GetDataFromLobby()
+    void WaitDataFromLobby()
     {
         coreGameWS.Connect ();
         coreGameWS.OnMessage += (sender, e) =>
@@ -17,29 +24,37 @@ public class CoreGameManager : MonoBehaviour
                 Debug.Log("Server akka say back " + e.Data);
                 var receiveData = new string(e.Data.ToCharArray());
                 coreGameMessages.Add(receiveData);
+                playerIndex = coreGameMessages.Count;
             };
     }
-    
-    void StartGameFromLobby()
+
+    void InitAllData(List<string> data)
     {
-        Debug.Log("Current message receive: " + coreGameMessages.Count);
-        Debug.Log("First message: " + coreGameMessages[0]);
+        allDatas = PlayerDataSync.Init(data);
+    }
+
+    void InitGameFromLobby()
+    {
+        
     }
     
     void Start()
     {
+        allDatas = new List<PlayerDataSync>();
         coreGameMessages = new List<string>();
-        coreGameWS = new WebSocket("ws://192.168.220.129:8089/?playerName=thaocute&mapPosition=1_1");
-        GetDataFromLobby();
-        Invoke("StartGameFromLobby", 0.5f);
+        coreGameWS = new WebSocket(lobby.StartGameFromLobby());
+        WaitDataFromLobby();
+        Invoke("InitGameFromLobby", 0.5f);
+        lobbyMapObj.SetActive(false);
+        lobby.enabled = false;
     }
 
     void Update()
     {
-       
+        
     }
     void FixedUpdate() 
     {
-      
+        
     }
 }
