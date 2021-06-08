@@ -47,11 +47,11 @@ public class LobbyManager : MonoBehaviour
     void LobbyUpdate()
     {
         Debug.Log("Lobby still update");
-        title.text = lobbyMessages.Count + " / " + lobbySize +" players join to lobby" + "\n You is player " + playerIndex;
+        title.text = lobbyMessages.Count + " / " + lobbySize +" players join to lobby" + "\n You is player " + (playerIndex + 1);
         if (lobbyMessages.Count >= lobbySize)
         {
             title.text = "READY TO START GAME BABIES..";
-            Invoke("StartGameFromLobby", 4.0f);
+            Invoke("StartGameFromLobby", 2.0f);
         }
     }
     
@@ -61,7 +61,7 @@ public class LobbyManager : MonoBehaviour
         coreGameObj.SetActive(false);
         isGameHaveStarted = false;
         lobbyMessages = new List<string>();
-        lobbyWS = new WebSocket("ws://192.168.220.129:8086/privateLobby");
+        lobbyWS = new WebSocket("ws://192.168.220.129:8086/?playerName=" + PlayerDataLocal.playerUserName + "&mapPosition=-25_00");
     }
     // Update is called once per frame
     void FixedUpdate()

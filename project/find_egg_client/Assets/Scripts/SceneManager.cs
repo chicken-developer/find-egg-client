@@ -1,5 +1,6 @@
 ﻿
 
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum GameState
@@ -21,6 +22,7 @@ public class SceneManager : MonoBehaviour
     
     [SerializeField] private LobbyManager lobby;
     [SerializeField] private CoreGameManager coreGame;
+
     void SetupUI()
     {
         UI_MainMenu.SetActive(true);
@@ -29,6 +31,7 @@ public class SceneManager : MonoBehaviour
     }
     void Start()
     {
+
         lobby.enabled = false;
         UICanvas.enabled = true;
         coreGame.enabled = false;
