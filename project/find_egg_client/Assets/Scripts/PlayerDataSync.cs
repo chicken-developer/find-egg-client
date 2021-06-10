@@ -24,12 +24,10 @@ public  class PlayerDataSync
     public PlayerData playerData;
     public string playerIndex;
     public string playerName;
-    public static List<PlayerDataSync> Init(List<string> input)
+    public static List<PlayerDataSync> Init(string resultFromServer)
     {
         var players = new List<PlayerDataSync>();
-        foreach (var resultFromServer in input)
-        {
-            var afterReplace = resultFromServer.Remove(0, 1).Remove(resultFromServer.Length - 2, 1).Replace("},{", "};{");
+          var afterReplace = resultFromServer.Remove(0, 1).Remove(resultFromServer.Length - 2, 1).Replace("},{", "};{");
             var playerDatas = afterReplace.Split(';');
             foreach (var playerData in playerDatas)
             {
@@ -39,8 +37,6 @@ public  class PlayerDataSync
                 players.Add(player);
                 Debug.Log(player.playerName);
             }
-        }
-       
         return players;
     }
 }
