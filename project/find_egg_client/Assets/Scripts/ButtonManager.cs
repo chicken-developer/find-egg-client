@@ -6,7 +6,7 @@ public class ButtonManager: MonoBehaviour
     [SerializeField] private Canvas UICanvas;
     [SerializeField] private Canvas HUDCanvas;
     [SerializeField] private LobbyManager lobby;
-    [SerializeField] private GameObject gameplay;
+    [SerializeField] private CoreGameManager gameplay;
     
     [SerializeField] private GameObject UI_MainMenu;
     [SerializeField] private GameObject UI_SingleMode;
@@ -25,7 +25,8 @@ public class ButtonManager: MonoBehaviour
 
     void Start()
     {
-        lobby.enabled = true; // Enter lobby
+        lobby.enabled = false;
+        gameplay.enabled = false;
         ui_btn_MultiMode.onClick.AddListener(OnClick_ui_btn_MultiMode);
         multiMode_btn_Login.onClick.AddListener(OnClick_multiMode_btn_Login);
         hud_btn_EnterGame.onClick.AddListener(OnClick_hud_btn_EnterGame);
@@ -64,8 +65,6 @@ public class ButtonManager: MonoBehaviour
 
     private void OnClick_hud_btn_Shop()
     {
-       
-       
         UICanvas.enabled = false;
         HUDCanvas.enabled = false;
        

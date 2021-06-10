@@ -6,7 +6,7 @@ using UnityEngine;
 public class AccountBehavior 
 {
     private static AccountBehavior _instance;
-    private string serverAddress = "http://192.168.220.129:8084";
+    private string serverAddress = "http://192.168.1.9:8086/api/people";
     public static AccountBehavior GetInstance()
     {
         if (_instance == null)
@@ -22,7 +22,7 @@ public class AccountBehavior
         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
         StreamReader reader = new StreamReader(response.GetResponseStream());
         string jsonResponse = reader.ReadToEnd();
-        Debug.Log("Result from golang server: " + jsonResponse);
+        Debug.Log("Result from account server: " + jsonResponse);
         return true;
     }
     

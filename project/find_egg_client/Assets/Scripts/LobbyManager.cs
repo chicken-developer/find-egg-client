@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using WebSocketSharp;
@@ -17,6 +18,11 @@ public class LobbyManager : MonoBehaviour
     private static int playerIndex;
     public void JoinOrQuitLobby(string playerData = "null") // This will call from another scene to put player into lobby
     {
+        if (lobbyWS == null)
+        {
+            lobbyWS = new WebSocket("ws://192.168.1.9:8087/?playerName=" + PlayerDataLocal.playerUserName);
+
+        }
         lobbyWS.Connect ();
         lobbyWS.OnMessage += (sender, e) =>
         {
@@ -25,14 +31,10 @@ public class LobbyManager : MonoBehaviour
             lobbyMessages.Add(receiveData);
             Debug.Log("Current message size: " + lobbyMessages.Count);
             Debug.Log("Newest message: " + lobbyMessages[lobbyMessages.Count]);
-
             playerIndex = lobbyMessages.Count;
             Debug.Log("Current player index: " + playerIndex);
-
         };
-        //Sent playerName and position only: playerName=asdasd&mapPosition=1_2
-        lobbyWS.Send(playerData); // This server will return an address for player join match
-        //EX: ws:192.168.220.129:8089/?playerName=asdasd&mapPosition=1_2
+        //lobbyWS.Send("SPECIAL_REQUEST:JOIN"); // This server will return an address for player join match
     }
 
     public string StartGameFromLobby()
@@ -46,9 +48,13 @@ public class LobbyManager : MonoBehaviour
     }
     void LobbyUpdate()
     {
-        Debug.Log("Lobby still update");
-        title.text = lobbyMessages.Count + " / " + lobbySize +" players join to lobby" + "\n You is player " + (playerIndex + 1);
-        if (lobbyMessages.Count >= lobbySize)
+        var lastMessage = lobbyMessages[lobbyMessages.Count - 1];
+        Debug.Log("Last message is: " + lastMessage);
+
+        var currentLobbySize = lastMessage.Count(f => f == '{') / 2;
+        Debug.Log("Lobby still update, current player is: " + currentLobbySize);
+        title.text = currentLobbySize + " / " + lobbySize +" players join to lobby" + "\n You is player " + (playerIndex + 1);
+        if (currentLobbySize >= lobbySize)
         {
             title.text = "READY TO START GAME BABIES..";
             Invoke("StartGameFromLobby", 2.0f);
@@ -61,7 +67,7 @@ public class LobbyManager : MonoBehaviour
         coreGameObj.SetActive(false);
         isGameHaveStarted = false;
         lobbyMessages = new List<string>();
-        lobbyWS = new WebSocket("ws://192.168.220.129:8086/?playerName=" + PlayerDataLocal.playerUserName + "&mapPosition=-25_00");
+        Debug.Log("Lobby Start finished");
     }
     // Update is called once per frame
     void FixedUpdate()
