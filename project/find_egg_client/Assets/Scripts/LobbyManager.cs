@@ -12,7 +12,7 @@ public class LobbyManager : MonoBehaviour
     [SerializeField] private Text title;
     private WebSocket lobbyWS;
     private bool isGameHaveStarted;
-    private int lobbySize =1 ;
+    private int lobbySize = 3 ;
     private List<string> lobbyMessages;
     private List<PlayerDataSync> playersDataFromLobby;
     private static int playerIndex;

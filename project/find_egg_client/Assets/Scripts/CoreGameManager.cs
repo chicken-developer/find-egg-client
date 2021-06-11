@@ -1,17 +1,20 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using WebSocketSharp;
-
 
 public class CoreGameManager : MonoBehaviour
 {
     [SerializeField] private LobbyManager lobby;
     [SerializeField] private GameObject lobbyMapObj;
     [SerializeField] private GameObject player;
+    [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private List<GameObject> enemies;
+    private List<PlayerDataSync> enemiesDatas;
     private List<PlayerDataSync> allDatas;
+
     private PlayerDataSync currentPlayerData;
     
     private WebSocket coreGameWS;
@@ -34,13 +37,42 @@ public class CoreGameManager : MonoBehaviour
         allDatas = PlayerDataSync.Init(coreGameMessages[coreGameMessages.Count - 1]);
         currentPlayerData = allDatas.Find(player => player.playerName == PlayerDataLocal.playerUserName);
         player.transform.position = new Vector3(currentPlayerData.playerData.position.x,currentPlayerData.playerData.position.y, player.transform.position.z );
-        //TODO: Init for enemies;
+        enemiesDatas = allDatas.FindAll(player => player.playerName != PlayerDataLocal.playerUserName);
+        enemies = new List<GameObject>(enemiesDatas.Count);
+        
+        foreach (var enemyData in enemiesDatas)
+        {
+            var enemy = new GameObject();
+            enemy = Instantiate(enemyPrefab, new Vector3(enemyData.playerData.position.x, enemyData.playerData.position.y, 0), Quaternion.identity);
+            enemies.Add(enemy);
+        }
+        Debug.Log("Now have " + allDatas.Count + "  data in game");
+        Debug.Log("Now have " + enemiesDatas.Count + " enemy data in game");
+        Debug.Log("Now have " + enemies.Count + " enemy object in game");
+
     }
 
     void SyncAllDataWithServer()
     {
         allDatas = PlayerDataSync.Init(coreGameMessages[coreGameMessages.Count - 1]);
         currentPlayerData = allDatas.Find(player => player.playerName == PlayerDataLocal.playerUserName);
+        enemiesDatas = allDatas.FindAll(enemy => enemy.playerName != PlayerDataLocal.playerUserName);
+        Debug.Log("Sync have " + allDatas.Count + "  data in game");
+        Debug.Log("Sync have " + enemiesDatas.Count + " enemy data in game");
+        Debug.Log("Sync have " + enemies.Count + " enemy object in game");
+        SyncEnemyData();
+    }
+
+    void SyncEnemyData()
+    {
+        foreach(var data in  enemiesDatas.Zip(enemies, Tuple.Create))
+        {
+            Vector3 newPosition = data.Item2.transform.position;
+            newPosition.x = data.Item1.playerData.position.x ;
+            newPosition.y = data.Item1.playerData.position.y;
+            data.Item2.transform.position = newPosition;
+        }
+
     }
     void move()
     {

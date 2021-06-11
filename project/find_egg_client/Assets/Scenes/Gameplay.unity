@@ -572,63 +572,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 155968887}
   m_CullTransparentMesh: 0
---- !u!1001 &250714173
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1442782855}
-    m_Modifications:
-    - target: {fileID: 3215434297925210821, guid: a02cbf3b27ba13143809feded8b48241, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 18.162794
-      objectReference: {fileID: 0}
-    - target: {fileID: 3215434297925210821, guid: a02cbf3b27ba13143809feded8b48241, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.3591509
-      objectReference: {fileID: 0}
-    - target: {fileID: 3215434297925210821, guid: a02cbf3b27ba13143809feded8b48241, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1.1366401
-      objectReference: {fileID: 0}
-    - target: {fileID: 3215434297925210821, guid: a02cbf3b27ba13143809feded8b48241, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3215434297925210821, guid: a02cbf3b27ba13143809feded8b48241, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3215434297925210821, guid: a02cbf3b27ba13143809feded8b48241, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3215434297925210821, guid: a02cbf3b27ba13143809feded8b48241, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3215434297925210821, guid: a02cbf3b27ba13143809feded8b48241, type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3215434297925210821, guid: a02cbf3b27ba13143809feded8b48241, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3215434297925210821, guid: a02cbf3b27ba13143809feded8b48241, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3215434297925210821, guid: a02cbf3b27ba13143809feded8b48241, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6475389094403448803, guid: a02cbf3b27ba13143809feded8b48241, type: 3}
-      propertyPath: m_Name
-      value: Opponent
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a02cbf3b27ba13143809feded8b48241, type: 3}
 --- !u!1 &251845488
 GameObject:
   m_ObjectHideFlags: 0
@@ -3014,11 +2957,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c115d334ca5445d4d9e88500899c3e09, type: 3}
---- !u!4 &1056612466 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3215434297925210821, guid: a02cbf3b27ba13143809feded8b48241, type: 3}
-  m_PrefabInstance: {fileID: 250714173}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1076849503
 GameObject:
   m_ObjectHideFlags: 0
@@ -4245,7 +4183,6 @@ Transform:
   - {fileID: 697021618}
   - {fileID: 1818782049}
   - {fileID: 1376488028}
-  - {fileID: 1056612466}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5405,7 +5342,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1887103340979927339, guid: 6cf39d2001f221349abe95d6621c15d6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.1366401
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1887103340979927339, guid: 6cf39d2001f221349abe95d6621c15d6, type: 3}
       propertyPath: m_LocalRotation.x
@@ -5687,6 +5624,7 @@ MonoBehaviour:
   lobby: {fileID: 1201741757}
   lobbyMapObj: {fileID: 3503037208445620463}
   player: {fileID: 1024977996}
+  enemyPrefab: {fileID: 6475389094403448803, guid: a02cbf3b27ba13143809feded8b48241, type: 3}
   enemies: []
 --- !u!1 &2048590863871055878 stripped
 GameObject:
