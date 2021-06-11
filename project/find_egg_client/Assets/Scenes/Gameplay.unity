@@ -2952,6 +2952,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 982519496}
   m_CullTransparentMesh: 0
+--- !u!1 &1024977996 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1641106272616285183, guid: 6cf39d2001f221349abe95d6621c15d6, type: 3}
+  m_PrefabInstance: {fileID: 1942579037}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1040675890
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5681,6 +5686,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lobby: {fileID: 1201741757}
   lobbyMapObj: {fileID: 3503037208445620463}
+  player: {fileID: 1024977996}
+  enemies: []
 --- !u!1 &2048590863871055878 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5450802914958804340, guid: e6b2e6f45d7865d4d89e895b69de2b87, type: 3}

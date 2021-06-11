@@ -36,45 +36,42 @@ public class CoreGameManager : MonoBehaviour
         player.transform.position = new Vector3(currentPlayerData.playerData.position.x,currentPlayerData.playerData.position.y, player.transform.position.z );
         //TODO: Init for enemies;
     }
-    void SyncDataWithServer(string serverData)
+
+    void SyncAllDataWithServer()
     {
+        allDatas = PlayerDataSync.Init(coreGameMessages[coreGameMessages.Count - 1]);
         currentPlayerData = allDatas.Find(player => player.playerName == PlayerDataLocal.playerUserName);
-        Debug.Log("Found current player is: " + currentPlayerData.playerName);
-        SyncMovement(currentPlayerData);
     }
-   
-    void SyncMovement(PlayerDataSync syncData)
+    void move()
     {
-        Debug.Log("Enter sync movement with new x and y:" + syncData.playerData.position.x + " : " + syncData.playerData.position.y);
-        Vector3 position = player.transform.position;
-        var newX = syncData.playerData.position.x;
-        var newY = syncData.playerData.position.y;
-        Debug.Log("+= x is: " + (newX - position.x) + " and += y is" + (newY - position.y));
-        position.x += (newX - position.x) ;
-        position.y += (newY - position.y);
-        player.transform.position = position;
+        Vector3 newPosition = player.transform.position;
+        newPosition.x = currentPlayerData.playerData.position.x ;
+        newPosition.y = currentPlayerData.playerData.position.y;
+        player.transform.position = newPosition;
     }
-    
     void MovementUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
             coreGameWS.Send("MOVE_REQUEST:left");
+            move();
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
             coreGameWS.Send("MOVE_REQUEST:right");
+            move();
         }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow))
         {
             coreGameWS.Send("MOVE_REQUEST:up");
-
+            move();
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.DownArrow))
         { 
             coreGameWS.Send("MOVE_REQUEST:down");
+            move();
         }
-        
+
     }
     
     void Start()
@@ -95,6 +92,11 @@ public class CoreGameManager : MonoBehaviour
     }
     void FixedUpdate() 
     {
-        
+        if (coreGameMessages.Count > 1000)
+        {
+            coreGameMessages.RemoveRange(0,500);
+        }
+
+        SyncAllDataWithServer();
     }
 }
