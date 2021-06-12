@@ -7,12 +7,14 @@ using WebSocketSharp;
 
 public class LobbyManager : MonoBehaviour
 {
-    [SerializeField] private CoreGameManager coreGame;
-    [SerializeField] private GameObject coreGameObj;
+    [SerializeField] private GameObject inGameMenuPrefab;
+    [SerializeField] private GameObject gameplayPrefab;
+    [SerializeField] private GameObject lobbyPrefab;
+    
     [SerializeField] private Text title;
     private WebSocket lobbyWS;
     private bool isGameHaveStarted;
-    private int lobbySize = 3 ;
+    private int lobbySize = 1 ;
     private List<string> lobbyMessages;
     private List<PlayerDataSync> playersDataFromLobby;
     private static int playerIndex;
@@ -35,8 +37,7 @@ public class LobbyManager : MonoBehaviour
 
     public string StartGameFromLobby()
     {
-        coreGameObj.SetActive(true);
-        coreGame.enabled = true;
+        gameplayPrefab.SetActive(true);
         isGameHaveStarted = true;
         var indexMes = lobbyMessages[0];
         var currentPlayers = LobbyDataSync.Init(indexMes);
@@ -61,8 +62,8 @@ public class LobbyManager : MonoBehaviour
     
     void Start()
     {
-        coreGame.enabled = false;
-        coreGameObj.SetActive(false);
+        inGameMenuPrefab.SetActive(false);
+        gameplayPrefab.SetActive(false);
         isGameHaveStarted = false;
         lobbyMessages = new List<string>();
         Debug.Log("Lobby Start finished");
@@ -70,6 +71,8 @@ public class LobbyManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        Debug.Log("Lobby Start update");
+
         if(!isGameHaveStarted)
             LobbyUpdate();
         

@@ -15,15 +15,19 @@ public class AccountBehavior
         }
         return _instance;
     }
-
-    public bool Login(string userName, string password)
+    public bool ConnectToServer()
+    {
+      //TODO: Check if not have internet 
+        return true;
+    }
+    public string Login(string userName, string password)
     {
         HttpWebRequest request = (HttpWebRequest)WebRequest.Create(String.Format(serverAddress));
         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
         StreamReader reader = new StreamReader(response.GetResponseStream());
         string jsonResponse = reader.ReadToEnd();
         Debug.Log("Result from account server: " + jsonResponse);
-        return true;
+        return jsonResponse;
     }
     
 }

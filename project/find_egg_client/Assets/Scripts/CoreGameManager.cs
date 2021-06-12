@@ -7,8 +7,8 @@ using WebSocketSharp;
 
 public class CoreGameManager : MonoBehaviour
 {
-    [SerializeField] private LobbyManager lobby;
-    [SerializeField] private GameObject lobbyMapObj;
+    [SerializeField] private GameObject lobbyPrefab;
+    
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private List<GameObject> enemies;
@@ -110,16 +110,17 @@ public class CoreGameManager : MonoBehaviour
     {
         allDatas = new List<PlayerDataSync>();
         coreGameMessages = new List<string>();
-        coreGameWS = new WebSocket(lobby.StartGameFromLobby());
-        Debug.Log("Current lobby url is: " + lobby.StartGameFromLobby());
+        coreGameWS = new WebSocket(lobbyPrefab.GetComponent<LobbyManager>().StartGameFromLobby());
+        Debug.Log("Current lobby url is: " + lobbyPrefab.GetComponent<LobbyManager>().StartGameFromLobby());
         WaitDataFromLobby();
-        lobbyMapObj.SetActive(false);
-        lobby.enabled = false;
+        lobbyPrefab.SetActive(false);
         Invoke("InitDataFromLobby", 0.5f);
+
     }
 
     void Update()
     {
+
         MovementUpdate();
     }
     void FixedUpdate() 
