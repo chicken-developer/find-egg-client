@@ -42,6 +42,7 @@ public class SceneManager : MonoBehaviour
         inGameMenuPrefab.SetActive(false);
         gameplayPrefab.SetActive(false);
         lobbyPrefab.SetActive(false);
+        
         inGameMenu.enabled = false;
         UICanvas.enabled = true;
         SetupUI();
@@ -64,12 +65,12 @@ public class SceneManager : MonoBehaviour
         if (result == "" || !AccountBehavior.GetInstance().ConnectToServer())
         {
             //TODO: Handle case login false here
+            Debug.Log("Server is not running now");
             return;
         }
 
         PlayerDataLocal.Init(result);
         UICanvas.enabled = false;
-        
         inGameMenuPrefab.SetActive(true);
     }
 }

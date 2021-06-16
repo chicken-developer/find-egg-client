@@ -127,8 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbfa4d34d99763043a6df29822c1d06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobby: {fileID: 0}
-  lobbyMapObj: {fileID: 0}
+  lobbyPrefab: {fileID: 0}
   player: {fileID: 0}
   enemyPrefab: {fileID: 0}
   enemies: []
@@ -197,8 +196,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 39.00006, y: 192.99997}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 0.000069618, y: 192.99997}
+  m_SizeDelta: {x: 299.99994, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2457513016298045740
 CanvasRenderer:
@@ -235,13 +234,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: LOBBY
+  m_Text: TIME REMAINING..
 --- !u!1 &7861039866683210741
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,18 +308,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_FontSize: 50
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
-    m_MaxSize: 40
+    m_MaxSize: 50
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 10 / 100 player joined
+  m_Text: '12 : 00'
 --- !u!1 &8372540775799727580
 GameObject:
   m_ObjectHideFlags: 0

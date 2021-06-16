@@ -6,7 +6,14 @@ public  class PlayerDataLocal
     
     public static void Init(string data)
     {
-        var playerDatas = data.Split(';');
+        //TODO: Not use data now
+        var playerDatas = "demo;-22_00".Split(';');
+        var playerDataLocal = new PlayerDataLocal();
+        playerUserName = playerDatas[0];
+    }
+    public static void Update(string newData)
+    {
+        var playerDatas = newData.Split(';');
         var playerDataLocal = new PlayerDataLocal();
         playerUserName = playerDatas[0];
     }

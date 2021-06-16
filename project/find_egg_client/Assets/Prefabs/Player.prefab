@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6131782557433625180}
   - component: {fileID: 8638850718133272207}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: fallen_angel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4730700911659488452}
   - component: {fileID: 5143931127783018841}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: fire_golem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 374579628572287690}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +189,7 @@ Transform:
   m_GameObject: {fileID: 1771755750199481378}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 2811938934668543432}
   - {fileID: 688758759457192685}
@@ -216,7 +216,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2811938934668543432}
   - component: {fileID: 4914320058150306188}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: wraith_pink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,7 +298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7966439835342480330}
   - component: {fileID: 7044322032234735973}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: earth_golem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,7 +380,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3317879328136034574}
   - component: {fileID: 2175597129480737164}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: angel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -462,7 +462,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6245096174911618958}
   - component: {fileID: 7606441221244813793}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: killer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -544,7 +544,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6146084080277261610}
   - component: {fileID: 4055483546008189745}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: reaper_ice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -626,7 +626,7 @@ GameObject:
   m_Component:
   - component: {fileID: 688758759457192685}
   - component: {fileID: 8246883124990748692}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: wraith_brown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -708,7 +708,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7853904455856478496}
   - component: {fileID: 8689159607983191404}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: reaper_fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -790,7 +790,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7026307957029215728}
   - component: {fileID: 404216088282442456}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: wraith_blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -872,7 +872,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6923838433236732142}
   - component: {fileID: 7423919888183410676}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: reaper_potion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -954,7 +954,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8392223084666326408}
   - component: {fileID: 3269147232551911044}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: ice_golem
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -6,7 +6,7 @@ using UnityEngine;
 public class AccountBehavior 
 {
     private static AccountBehavior _instance;
-    private string serverAddress = "http://192.168.1.9:8086/api/people";
+    private string serverAddress = "http://127.0.0.1:8086/api/people";
     public static AccountBehavior GetInstance()
     {
         if (_instance == null)

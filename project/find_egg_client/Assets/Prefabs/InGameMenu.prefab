@@ -1224,6 +1224,7 @@ MonoBehaviour:
   btnShop: {fileID: 0}
   btnLogout: {fileID: 0}
   inGameMenuPrefab: {fileID: 0}
+  gameplayPrefab: {fileID: 0}
   lobbyPrefab: {fileID: 0}
 --- !u!1 &7439517247813974086
 GameObject:
@@ -1618,11 +1619,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 374579628572287690, guid: 6cf39d2001f221349abe95d6621c15d6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17.8
+      value: -49.78
       objectReference: {fileID: 0}
     - target: {fileID: 374579628572287690, guid: 6cf39d2001f221349abe95d6621c15d6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -3.9
       objectReference: {fileID: 0}
     - target: {fileID: 374579628572287690, guid: 6cf39d2001f221349abe95d6621c15d6, type: 3}
       propertyPath: m_LocalPosition.z

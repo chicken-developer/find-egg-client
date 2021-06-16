@@ -20,9 +20,10 @@ public class LobbyManager : MonoBehaviour
     private static int playerIndex;
     public void JoinOrQuitLobby(string playerData = "null") // This will call from another scene to put player into lobby
     {
+        Debug.Log("Enter join or quit lobby");
         if (lobbyWS == null)
         {
-            lobbyWS = new WebSocket("ws://192.168.1.9:8087/?playerName=" + PlayerDataLocal.playerUserName);
+            lobbyWS = new WebSocket("ws://127.0.0.1:8087/?playerName=" + PlayerDataLocal.playerUserName);
 
         }
         lobbyWS.Connect ();
@@ -63,12 +64,10 @@ public class LobbyManager : MonoBehaviour
     void Start()
     {
         inGameMenuPrefab.SetActive(false);
-        gameplayPrefab.SetActive(false);
         isGameHaveStarted = false;
         lobbyMessages = new List<string>();
         Debug.Log("Lobby Start finished");
     }
-    // Update is called once per frame
     void FixedUpdate()
     {
         Debug.Log("Lobby Start update");
